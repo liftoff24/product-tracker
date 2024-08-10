@@ -43,8 +43,8 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Expose port 8080
 EXPOSE 10000
 
-# Start PHP-FPM
-CMD ["php-fpm", "-F"]
+# Run Laravel's built-in server
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
 
 # Copy PHP-FPM configuration file
 COPY php-fpm.conf /usr/local/etc/php-fpm.d/zzz-custom.conf
