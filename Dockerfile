@@ -43,6 +43,8 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Expose port 8080
 EXPOSE 10000
 
+RUN php artisan migrate --force
+
 # Run Laravel's built-in server
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
 
