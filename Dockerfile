@@ -34,16 +34,11 @@ COPY --chown=www-data:www-data . /var/www/html
 # Install Laravel dependencies
 RUN composer install --optimize-autoloader --no-dev
 
-# Generate Laravel application key
-RUN php artisan key:generate
-
 # Set permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD ["php-fpm"]
 
-# Optional: Add supervisor configuration for queue workers (if needed)
-# COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-# CMD ["/usr/bin/supervisord", "-n"]
+# Start the PHP-FPM server and run key generation
+CMD php artisan key:generate && php-fpm
