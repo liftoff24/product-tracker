@@ -37,6 +37,8 @@ RUN cp .env.example .env
 # Install Laravel dependencies
 RUN composer install --optimize-autoloader --no-dev
 
+RUN touch database/database.sqlite
+
 # Set permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
@@ -47,13 +49,10 @@ COPY database/database.sqlite /var/www/html/database/database.sqlite
 RUN chown -R www-data:www-data /var/www/html/database \
     && chmod -R 775 /var/www/html/database
 
-# Run migrations with the correct environment
-RUN php artisan migrate --force
+CMD ["php", "artisan", "migrate", "--force"]
 
 # Expose port 8080
 EXPOSE 10000
-
-CMD ["php", "artisan", "migrate"]
 
 # Copy PHP-FPM configuration file
 COPY php-fpm.conf /usr/local/etc/php-fpm.d/zzz-custom.conf
