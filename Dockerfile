@@ -40,15 +40,23 @@ RUN composer install --optimize-autoloader --no-dev
 # Set permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Ensure the SQLite file is copied into the container
+COPY database/database.sqlite /var/www/html/database/database.sqlite
+
+# Ensure correct ownership and permissions
+RUN chown -R www-data:www-data /var/www/html/database \
+    && chmod -R 775 /var/www/html/database
+
+# Run migrations with the correct environment
+RUN php artisan migrate --force
+
 # Expose port 8080
 EXPOSE 10000
 
 CMD ["php", "artisan", "migrate"]
 
-# Run Laravel's built-in server
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
-
 # Copy PHP-FPM configuration file
 COPY php-fpm.conf /usr/local/etc/php-fpm.d/zzz-custom.conf
 
-
+# Run Laravel's built-in server
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
