@@ -49,3 +49,4 @@ CMD ["php-fpm", "-F", "-d", "fpm.listen=0.0.0.0:8080"]
 # Copy PHP-FPM configuration file
 COPY php-fpm.conf /usr/local/etc/php-fpm.d/zzz-custom.conf
 
+
