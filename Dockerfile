@@ -43,8 +43,8 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Expose port 8080
 EXPOSE 8080
 
-# Start PHP-FPM server with custom config
-CMD ["php-fpm", "-F", "-d", "fpm.listen=0.0.0.0:8080"]
+# Start PHP-FPM
+CMD ["php-fpm", "-F"]
 
 # Copy PHP-FPM configuration file
 COPY php-fpm.conf /usr/local/etc/php-fpm.d/zzz-custom.conf
