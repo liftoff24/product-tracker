@@ -37,7 +37,7 @@ RUN cp .env.example .env
 # Install Laravel dependencies
 RUN composer install --optimize-autoloader --no-dev
 
-RUN touch database/database.sqlite
+RUN touch /var/www/html/database/database.sqlite
 
 # Set permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
