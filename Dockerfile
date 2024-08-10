@@ -41,7 +41,8 @@ RUN composer install --optimize-autoloader --no-dev
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Expose port 9000 and start php-fpm server
-EXPOSE 9000
+EXPOSE 8080
+CMD ["php-fpm", "-F", "-d", "fpm.listen=0.0.0.0:8080"]
 
 # Start the PHP-FPM server and run key generation
 CMD php artisan key:generate && php-fpm
