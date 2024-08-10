@@ -43,6 +43,10 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Expose port 8080
 EXPOSE 10000
 
+# Install PHP dependencies
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+# Run database migrations
 RUN php artisan migrate --force
 
 # Run Laravel's built-in server
