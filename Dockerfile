@@ -41,7 +41,7 @@ RUN composer install --optimize-autoloader --no-dev
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Expose port 8080
-EXPOSE 8080
+EXPOSE 10000
 
 # Start PHP-FPM
 CMD ["php-fpm", "-F"]
